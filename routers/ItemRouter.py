@@ -6,7 +6,7 @@ from fastapi.params import Depends
 from models.ItemModel import Item
 from enum import Enum
 router = APIRouter()
-
+from dbactions import CreateTable
 class EnumValues(Enum):
     a = "a"
     b = "b"
@@ -38,3 +38,9 @@ dependencyValidationObject = dependencyValidation()
 @router.post("/modifyTheItemId")
 async def dependencyMapping(modifiedItemId: Annotated[Union[str,None],Depends(dependencyValidationObject)]):
     return modifiedItemId
+
+@router.post("/createTable")
+async def create_table():
+    return {
+        "data": CreateTable.create_table()
+    }
